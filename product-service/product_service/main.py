@@ -75,12 +75,12 @@ async def create_product(
 ):
     
     # serialized_product = json.dumps(product.__dict__).encode('utf-8')
-    product_proto = product_pb2.Product()
+    product_proto = product_pb2.Product(
     product_proto.name = product.name
     product_proto.price = product.price
     product_proto.quantity = product.quantity
     product_proto.description = product.description
-    product_proto.operation = product_pb2.OperationType.CREATE
+    product_proto.operation = product_pb2.OperationType.CREATE) # Make sure To Close It Correctly
     
     serialized_product = product_proto.SerializeToString()
     await producer.send_and_wait(KAFKA_PRODUCT_TOPIC, serialized_product)
